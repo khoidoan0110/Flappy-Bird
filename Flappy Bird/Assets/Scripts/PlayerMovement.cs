@@ -7,12 +7,12 @@ public class PlayerMovement : MonoBehaviour
     public float scoreInterval = 0.5f;
     protected Vector3 direction;
     public float gravity = -9.8f;
-    [SerializeField] private float maxY = 5f;
-    [SerializeField] private float minY = -3f;
+    public float maxY = 5f;
+    public float minY = -3f;
     public Animator animator;
 
-    private bool isDead = false;
-    private bool soundPlayed = false;
+    public bool isDead = false;
+    public bool soundPlayed = false;
 
     private void OnEnable()
     {

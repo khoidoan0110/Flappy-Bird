@@ -9,7 +9,33 @@ public class PlayerMovement1 : PlayerMovement
     private bool isDashing;
     [SerializeField] private float dashingPower = 5f;
     [SerializeField] private float dashingCooldown = 0.5f;
-    [SerializeField] private float dashingTime = 0.5f;
+    [SerializeField] private float dashingTime = 0.2f;
+
+    private void Update()
+{
+    if (!isDashing) // only apply gravity if not dashing
+    {
+        direction.y += gravity * Time.deltaTime;
+        transform.position += direction * Time.deltaTime;
+
+        if (transform.position.y > maxY)
+        {
+            transform.position = new Vector2(transform.position.x, maxY);
+        }
+        if (transform.position.y < minY)
+        {
+            GameManager.instance.GameOver();
+        }
+
+        if (isDead && !soundPlayed)
+        {
+            GameManager.instance.GameOver();
+            soundPlayed = true;
+        }
+    }
+
+    GetInput();
+}
 
 
     protected override void GetInput()
@@ -27,14 +53,18 @@ public class PlayerMovement1 : PlayerMovement
     {
         canDash = false;
         isDashing = true;
-        direction.y = 0;
-        direction.x += dashingPower;
-        transform.position += direction * Time.deltaTime;
         dustTrail.emitting = true;
-        yield return new WaitForSecondsRealtime(dashingTime);
+        direction.y = 0;
+        float dashingTimer = 0f;
+        while (dashingTimer < dashingTime)
+        {
+            dashingTimer += Time.deltaTime;
+            transform.position += transform.right * dashingPower * Time.deltaTime;
+            yield return null;
+        }
         dustTrail.emitting = false;
         isDashing = false;
-        yield return new WaitForSecondsRealtime(dashingCooldown);
+        yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
     }
 }
