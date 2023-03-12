@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e429999acb0636e4c8219ffbb2d80f5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
-  player: {fileID: 0}
+  pipeSpeed: 3
+  pipeSpawner: {fileID: 4543790820321997911, guid: 002b67d52849f8946bccfebb8a9ce98d, type: 3}
   topPipe: {fileID: 1677647483327681742}
   botPipe: {fileID: 1677647482704904121}

@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private float timeSinceLastScored = 0.0f;
+    public float timeSinceLastScored = 0.0f;
     public float scoreInterval = 0.5f;
     protected Vector3 direction;
     public float gravity = -9.8f;
@@ -11,8 +11,10 @@ public class PlayerMovement : MonoBehaviour
     public float minY = -3f;
     public Animator animator;
 
-    public bool isDead = false;
-    public bool soundPlayed = false;
+    protected bool isDead = false;
+    protected bool soundPlayed = false;
+    public bool isDashing;
+    public bool isShooting;
 
     private void OnEnable()
     {
@@ -61,27 +63,25 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void CheckCollision(GameObject upperPipe, GameObject lowerPipe)
+    public virtual void CheckCollision(GameObject upperPipe, GameObject lowerPipe)
     {
         // Check PipeTop
-        float dirXTop = upperPipe.transform.position.x;
-        float dirYTop = upperPipe.transform.position.y;
+        float TopPipeX = upperPipe.transform.position.x;
+        float TopPipeY = upperPipe.transform.position.y;
 
-        float topXLeft = dirXTop - 0.5f;
-
-        float topXRight = dirXTop + 0.5f;
-        float topY = dirYTop - 0.3f;
+        float topXLeft = TopPipeX - 0.5f;
+        float topXRight = TopPipeX + 0.5f;
+        float topYoffset = TopPipeY - 0.3f;
 
         // Check PipeBot
-        float dirXBot = lowerPipe.transform.position.x;
-        float dirYBot = lowerPipe.transform.position.y;
+        float BotPipeX = lowerPipe.transform.position.x;
+        float BotPipeY = lowerPipe.transform.position.y;
 
-        float botXLeft = dirXBot - 0.5f;
-        float botY = dirYBot + 0.3f;
+        float botXLeft = BotPipeX - 0.5f;
+        float botXRight = BotPipeX + 0.5f;
+        float botYoffset = BotPipeY + 0.3f;
 
-        float botXRight = dirXBot + 0.5f;
-
-        if (transform.position.y >= topY)
+        if (transform.position.y >= topYoffset)
         {
             if (transform.position.x + 0.2f > topXLeft && transform.position.x - 0.2f < topXRight)
             {
@@ -96,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
                 isDead = false;
             }
         }
-        else if (transform.position.y <= botY)
+        else if (transform.position.y <= botYoffset)
         {
             if (transform.position.x + 0.2f > topXLeft && transform.position.x - 0.2f < topXRight)
             {
@@ -111,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
                 isDead = false;
             }
         }
-        else if (transform.position.y < topY && transform.position.y > botY)
+        else if (transform.position.y < topYoffset && transform.position.y > botYoffset)
         {
             if (transform.position.x - 0.4f > topXLeft && transform.position.x + 0.4f < topXRight)
             {

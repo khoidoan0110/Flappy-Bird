@@ -1742,6 +1742,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6423320441674488625, guid: 42a157ddd0c25af4c95201806756edd3, type: 3}
+      propertyPath: sfxSounds.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423320441674488625, guid: 42a157ddd0c25af4c95201806756edd3, type: 3}
+      propertyPath: sfxSounds.Array.data[5].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 52400af293545fa4d958309a16193909, type: 3}
+    - target: {fileID: 6423320441674488625, guid: 42a157ddd0c25af4c95201806756edd3, type: 3}
+      propertyPath: sfxSounds.Array.data[5].name
+      value: Gun
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423320441674488625, guid: 42a157ddd0c25af4c95201806756edd3, type: 3}
+      propertyPath: sfxSounds.Array.data[6].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3d8a52ce028657e42a2753e254486e10, type: 3}
+    - target: {fileID: 6423320441674488625, guid: 42a157ddd0c25af4c95201806756edd3, type: 3}
+      propertyPath: sfxSounds.Array.data[6].name
+      value: PipeDestroyed
+      objectReference: {fileID: 0}
     - target: {fileID: 6423320441674488626, guid: 42a157ddd0c25af4c95201806756edd3, type: 3}
       propertyPath: m_RootOrder
       value: 0

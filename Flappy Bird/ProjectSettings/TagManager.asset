@@ -7,6 +7,8 @@ TagManager:
   - Pipe
   - Ground
   - Gap
+  - Spawner
+  - Bullet
   layers:
   - Default
   - TransparentFX
