@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
         direction = Vector3.zero;
     }
 
-    private void Update()
+    public virtual void Update()
     {
         direction.y += gravity * Time.deltaTime;
         transform.position += direction * Time.deltaTime;
@@ -71,47 +71,34 @@ public class PlayerMovement : MonoBehaviour
 
         float topXLeft = TopPipeX - 0.5f;
         float topXRight = TopPipeX + 0.5f;
-        float topYoffset = TopPipeY - 0.3f;
 
         // Check PipeBot
         float BotPipeX = lowerPipe.transform.position.x;
         float BotPipeY = lowerPipe.transform.position.y;
 
-        float botXLeft = BotPipeX - 0.5f;
-        float botXRight = BotPipeX + 0.5f;
-        float botYoffset = BotPipeY + 0.3f;
-
-        if (transform.position.y >= topYoffset)
+        if (transform.position.y >= TopPipeY && transform.position.y < maxY)
         {
             if (transform.position.x + 0.2f > topXLeft && transform.position.x - 0.2f < topXRight)
             {
-                if (!isDead)
-                {
-                    isDead = true;
-                    GameManager.instance.GameOver();
-                }
+                isDead = true;
             }
             else
             {
                 isDead = false;
             }
         }
-        else if (transform.position.y <= botYoffset)
+        else if (transform.position.y <= BotPipeY && transform.position.y > minY)
         {
-            if (transform.position.x + 0.2f > topXLeft && transform.position.x - 0.2f < topXRight)
+            if (transform.position.x + 0.2f> topXLeft && transform.position.x - 0.2f < topXRight)
             {
-                if (!isDead)
-                {
-                    isDead = true;
-                    GameManager.instance.GameOver();
-                }
+                isDead = true;
             }
             else
             {
                 isDead = false;
             }
         }
-        else if (transform.position.y < topYoffset && transform.position.y > botYoffset)
+        else if (transform.position.y < TopPipeY && transform.position.y > BotPipeY)
         {
             if (transform.position.x - 0.4f > topXLeft && transform.position.x + 0.4f < topXRight)
             {

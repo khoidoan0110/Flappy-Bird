@@ -41,75 +41,7 @@ public class PlayerMovement2 : PlayerMovement
         }
     }
 
-    // public override void CheckCollision(GameObject upperPipe, GameObject lowerPipe)
-    // {
-    //     // Check PipeTop
-    //     float TopPipeX = upperPipe.transform.position.x;
-    //     float TopPipeY = upperPipe.transform.position.y;
-
-    //     float topXLeft = TopPipeX - 0.5f;
-    //     float topXRight = TopPipeX + 0.5f;
-    //     float topYoffset = TopPipeY - 0.3f;
-
-    //     // Check PipeBot
-    //     float BotPipeX = lowerPipe.transform.position.x;
-    //     float BotPipeY = lowerPipe.transform.position.y;
-
-    //     float botXLeft = BotPipeX - 0.5f;
-    //     float botXRight = BotPipeX + 0.5f;
-    //     float botYoffset = BotPipeY + 0.3f;
-
-    //     if (transform.position.y >= topYoffset)
-    //     {
-    //         if (transform.position.x + 0.2f > topXLeft && transform.position.x - 0.2f < topXRight)
-    //         {
-    //             if (upperPipe.activeSelf)
-    //             {
-    //                 if (!isDead)
-    //                 {
-    //                     isDead = true;
-    //                     GameManager.instance.GameOver();
-    //                 }
-    //             }
-    //         }
-    //         else
-    //         {
-    //             isDead = false;
-    //         }
-    //     }
-    //     else if (transform.position.y <= botYoffset)
-    //     {
-    //         if (transform.position.x + 0.2f > topXLeft && transform.position.x - 0.2f < topXRight)
-    //         {
-    //             if (lowerPipe.activeSelf)
-    //             {
-    //                 if (!isDead)
-    //                 {
-    //                     isDead = true;
-    //                     GameManager.instance.GameOver();
-    //                 }
-    //             }
-    //         }
-    //         else
-    //         {
-    //             isDead = false;
-    //         }
-    //     }
-    //     else if (transform.position.y < topYoffset && transform.position.y > botYoffset)
-    //     {
-    //         if (transform.position.x - 0.4f > topXLeft && transform.position.x + 0.4f < topXRight)
-    //         {
-    //             if (timeSinceLastScored >= scoreInterval)
-    //             {
-    //                 GameManager.instance.IncreaseScore();
-    //                 timeSinceLastScored = 0.0f;
-    //             }
-    //         }
-    //     }
-    //     timeSinceLastScored += Time.deltaTime;
-    //     soundPlayed = false;
-    // }
-    public void CheckBulletCollision(GameObject upperPipe, GameObject lowerPipe)
+    public void CheckCollision(GameObject upperPipe, GameObject lowerPipe, GameObject rock)
     {
         // Check PipeTop
         float TopPipeX = upperPipe.transform.position.x;
@@ -117,31 +49,83 @@ public class PlayerMovement2 : PlayerMovement
 
         float topXLeft = TopPipeX - 0.5f;
         float topXRight = TopPipeX + 0.5f;
-        float topYoffset = TopPipeY - 0.3f;
 
         // Check PipeBot
         float BotPipeX = lowerPipe.transform.position.x;
         float BotPipeY = lowerPipe.transform.position.y;
 
-        float botXLeft = BotPipeX - 0.5f;
-        float botXRight = BotPipeX + 0.5f;
-        float botYoffset = BotPipeY + 0.3f;
+        // Check rock
+        float rockX = rock.transform.position.x;
+        float rockY = rock.transform.position.y;
 
-        if (bullet != null && bullet.activeSelf && bullet.transform.position.y >= topYoffset)
+        if (transform.position.y >= TopPipeY && transform.position.y < maxY)
         {
-            if (bullet.transform.position.x + 0.2f > topXLeft && bullet.transform.position.x - 0.2f < topXRight)
+            if (transform.position.x + 0.2f > topXLeft && transform.position.x - 0.2f < topXRight)
             {
-                bullet.gameObject.SetActive(false);
-                upperPipe.gameObject.SetActive(false);
-                AudioManager.instance.PlaySFX("PipeDestroyed");
+                isDead = true;
+            }
+            else
+            {
+                isDead = false;
             }
         }
-        else if (bullet != null && bullet.activeSelf && bullet.transform.position.y <= botYoffset)
+        else if (transform.position.y <= BotPipeY && transform.position.y > minY)
         {
-            if (bullet.transform.position.x + 0.2f > topXLeft && bullet.transform.position.x - 0.2f < topXRight)
+            if (transform.position.x + 0.2f > topXLeft && transform.position.x - 0.2f < topXRight)
+            {
+                isDead = true;
+            }
+            else
+            {
+                isDead = false;
+            }
+        }
+        else if (transform.position.y < TopPipeY && transform.position.y > BotPipeY) //inside gap
+        {
+            if (rock.activeSelf) // rock is active
+            {
+                if (transform.position.y < rockY + 0.5f && transform.position.y > rockY - 0.5f)
+                {
+                    if (transform.position.x + 0.2f > rockX - 0.5f && transform.position.x - 0.2f < rockX + 0.5f)
+                    {
+                        isDead = true;
+                    }
+                }
+            }
+            else
+            {
+                isDead = false;
+            }
+
+
+            if (transform.position.x - 0.4f > topXLeft && transform.position.x + 0.4f < topXRight)
+            {
+                if (timeSinceLastScored >= scoreInterval)
+                {
+                    GameManager.instance.IncreaseScore();
+                    timeSinceLastScored = 0.0f;
+                }
+            }
+        }
+        timeSinceLastScored += Time.deltaTime;
+        soundPlayed = false;
+    }
+
+    public void CheckBulletCollision(GameObject rock)
+    {
+        // Check rock
+        float rockX = rock.transform.position.x;
+        float rockY = rock.transform.position.y;
+
+        float leftX = rockX - 0.5f;
+        float rightX = rockX + 0.5f;
+
+        if (bullet != null && bullet.activeSelf && bullet.transform.position.y >= rockY - 0.5f && bullet.transform.position.y <= rockY + 0.5f)
+        {
+            if (bullet.transform.position.x + 0.2f > leftX && bullet.transform.position.x - 0.2f < rightX)
             {
                 bullet.gameObject.SetActive(false);
-                lowerPipe.gameObject.SetActive(false);
+                rock.gameObject.SetActive(false);
                 AudioManager.instance.PlaySFX("PipeDestroyed");
             }
         }

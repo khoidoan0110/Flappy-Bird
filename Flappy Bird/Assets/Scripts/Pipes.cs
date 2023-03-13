@@ -14,6 +14,7 @@ public class Pipes : MonoBehaviour
 
     [SerializeField] private GameObject topPipe;
     [SerializeField] private GameObject botPipe;
+    [SerializeField] private GameObject rock;
     private float leftCameraEdge;
 
     private void Start()
@@ -21,18 +22,22 @@ public class Pipes : MonoBehaviour
         if (SelectionController.instance.CharIndex == 0)
         {
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+            rock.SetActive(false);
         }
         else if (SelectionController.instance.CharIndex == 1)
         {
             player1 = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement1>();
+            rock.SetActive(false);
         }
         else if (SelectionController.instance.CharIndex == 2)
         {
             player2 = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement2>();
+            rock.SetActive(true);
         }
         else if (SelectionController.instance.CharIndex == 3)
         {
             player3 = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement3>();
+            rock.SetActive(false);
         }
 
         leftCameraEdge = Camera.main.ScreenToWorldPoint(Vector3.zero).x - 1f;
@@ -47,20 +52,19 @@ public class Pipes : MonoBehaviour
 
         if (player1 != null)
         {
-            player1.CheckCollision(topPipe, botPipe);
             if (player1.isDashing)
             {
                 StartCoroutine(DashPipe());
             }
-            // if (pipeDashing == false)
-            // {
-
-            // }
+            if (pipeDashing == false)
+            {
+                player1.CheckCollision(topPipe, botPipe);
+            }
         }
         if (player2 != null)
         {
-            //player2.CheckCollision(topPipe, botPipe);
-            player2.CheckBulletCollision(topPipe, botPipe);
+            player2.CheckCollision(topPipe, botPipe, rock);
+            player2.CheckBulletCollision(rock);
         }
 
         if (player3 != null)

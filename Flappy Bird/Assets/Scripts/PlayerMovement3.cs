@@ -9,22 +9,9 @@ public class PlayerMovement3 : PlayerMovement
     public float cooldown = 1.5f;
     float nextSlow = 0f;
 
-    void Update()
+    public override void Update()
     {
-        direction.y += gravity * Time.deltaTime;
-        transform.position += direction * Time.deltaTime;
-
-        if (transform.position.y > maxY)
-        {
-            transform.position = new Vector2(transform.position.x, maxY);
-        }
-        if (transform.position.y < minY)
-        {
-            GameManager.instance.GameOver();
-        }
-
-        GetInput();
-
+        base.Update();
         Time.timeScale += (1f / slowdownLength) * Time.unscaledDeltaTime;
         Time.timeScale = Mathf.Clamp(Time.timeScale, 0, 1);
     }
@@ -50,4 +37,6 @@ public class PlayerMovement3 : PlayerMovement
             }
         }
     }
+
+    
 }
