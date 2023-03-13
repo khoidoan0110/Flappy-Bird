@@ -10,7 +10,7 @@ public class PlayerMovement1 : PlayerMovement
     [SerializeField] private float dashingTime = 0.5f;
     [SerializeField] private PipeSpawner pipeSpawner;
 
-    private void Update()
+    public override void Update()
     {
         if (!isDashing) // only apply gravity if not dashing
         {
@@ -36,7 +36,33 @@ public class PlayerMovement1 : PlayerMovement
         GetInput();
     }
 
+    public void CheckPointPerGap(GameObject upperPipe, GameObject lowerPipe)
+    {
+        // Check PipeTop
+        float TopPipeX = upperPipe.transform.position.x;
+        float TopPipeY = upperPipe.transform.position.y;
 
+        float topXLeft = TopPipeX - 0.5f;
+        float topXRight = TopPipeX + 0.5f;
+
+        // Check PipeBot
+        float BotPipeX = lowerPipe.transform.position.x;
+        float BotPipeY = lowerPipe.transform.position.y;
+
+        if (transform.position.y < TopPipeY && transform.position.y > BotPipeY)
+        {
+            if (transform.position.x - 0.4f > topXLeft && transform.position.x + 0.4f < topXRight)
+            {
+                if (timeSinceLastScored >= scoreInterval)
+                {
+                    GameManager.instance.IncreaseScore();
+                    timeSinceLastScored = 0.0f;
+                }
+            }
+        }
+        timeSinceLastScored += Time.deltaTime;
+        soundPlayed = false;
+    }
     protected override void GetInput()
     {
         if (isDashing)
@@ -64,6 +90,7 @@ public class PlayerMovement1 : PlayerMovement
         canDash = false;
         isDashing = true;
         direction.y = 0;
+        scoreInterval = 0;
 
         float dashingTimer = 0f;
         while (dashingTimer < dashingTime)
@@ -73,6 +100,7 @@ public class PlayerMovement1 : PlayerMovement
         }
 
         isDashing = false;
+        scoreInterval = 0.5f;
         canJump = true;
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;

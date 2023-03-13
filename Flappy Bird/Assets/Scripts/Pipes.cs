@@ -52,13 +52,14 @@ public class Pipes : MonoBehaviour
 
         if (player1 != null)
         {
+            player1.CheckCollision(topPipe, botPipe);
             if (player1.isDashing)
             {
                 StartCoroutine(DashPipe());
             }
             if (pipeDashing == false)
             {
-                player1.CheckCollision(topPipe, botPipe);
+                player1.CheckPointPerGap(topPipe, botPipe);
             }
         }
         if (player2 != null)

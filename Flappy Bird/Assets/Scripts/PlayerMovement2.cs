@@ -86,7 +86,7 @@ public class PlayerMovement2 : PlayerMovement
             {
                 if (transform.position.y < rockY + 0.5f && transform.position.y > rockY - 0.5f)
                 {
-                    if (transform.position.x + 0.2f > rockX - 0.5f && transform.position.x - 0.2f < rockX + 0.5f)
+                    if (transform.position.x + 0.3f > rockX - 0.5f && transform.position.x - 0.3f < rockX + 0.5f)
                     {
                         isDead = true;
                     }
@@ -118,11 +118,12 @@ public class PlayerMovement2 : PlayerMovement
         float rockY = rock.transform.position.y;
 
         float leftX = rockX - 0.5f;
-        float rightX = rockX + 0.5f;
+        float topY = rockY + 0.5f;
+        float botY = rockY - 0.5f;
 
-        if (bullet != null && bullet.activeSelf && bullet.transform.position.y >= rockY - 0.5f && bullet.transform.position.y <= rockY + 0.5f)
+        if (bullet != null && bullet.activeSelf && bullet.transform.position.y > botY && bullet.transform.position.y <= topY)
         {
-            if (bullet.transform.position.x + 0.2f > leftX && bullet.transform.position.x - 0.2f < rightX)
+            if (bullet.transform.position.x + 0.2f > leftX)
             {
                 bullet.gameObject.SetActive(false);
                 rock.gameObject.SetActive(false);
