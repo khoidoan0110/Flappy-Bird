@@ -7,6 +7,7 @@ public class Pipes : MonoBehaviour
     private PlayerMovement player;
     private PlayerMovement1 player1;
     private PlayerMovement2 player2;
+    private PlayerMovement3 player3;
     // private Bullet bullet;
     private bool pipeDashing = false;
     private bool bulletActive = false;
@@ -28,6 +29,10 @@ public class Pipes : MonoBehaviour
         else if (SelectionController.instance.CharIndex == 2)
         {
             player2 = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement2>();
+        }
+        else if (SelectionController.instance.CharIndex == 3)
+        {
+            player3 = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement3>();
         }
 
         leftCameraEdge = Camera.main.ScreenToWorldPoint(Vector3.zero).x - 1f;
@@ -57,6 +62,12 @@ public class Pipes : MonoBehaviour
             //player2.CheckCollision(topPipe, botPipe);
             player2.CheckBulletCollision(topPipe, botPipe);
         }
+
+        if (player3 != null)
+        {
+            player3.CheckCollision(topPipe, botPipe);
+        }
+
         transform.position += Vector3.left * pipeSpeed * Time.deltaTime;
         if (transform.position.x < leftCameraEdge)
         {
