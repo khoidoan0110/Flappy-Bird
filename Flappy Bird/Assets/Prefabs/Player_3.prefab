@@ -105,6 +105,6 @@ MonoBehaviour:
   animator: {fileID: 0}
   isDashing: 0
   isShooting: 0
-  slowdownScale: 0.5
+  slowdownScale: 0.3
   slowdownLength: 1
-  cooldown: 1.5
+  cooldown: 0.5
