@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMovement3 : PlayerMovement
 {
     public float slowdownScale = 0.5f;
-    public float slowdownLength = 1f;
+    public float slowdownLength = 1.5f;
     public float cooldown = 1.5f;
     float nextSlow = 0f;
 

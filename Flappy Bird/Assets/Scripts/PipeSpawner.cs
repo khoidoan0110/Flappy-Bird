@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PipeSpawner : MonoBehaviour
@@ -21,8 +22,7 @@ public class PipeSpawner : MonoBehaviour
 
     public void Spawn()
     {
-        GameObject pipes = Instantiate(pipePrefab, transform.position, Quaternion.identity);
-        pipes.transform.position += Vector3.up * Random.Range(minHeight, maxHeight);
+        GameObject pipe = Instantiate(pipePrefab, transform.position, Quaternion.identity);
+        pipe.transform.position += Vector3.up * Random.Range(minHeight, maxHeight);
     }
-
 }

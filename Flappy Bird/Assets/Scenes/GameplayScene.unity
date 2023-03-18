@@ -2432,6 +2432,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PipeSpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 2183328289147563364, guid: a96a990423959c04999c5ed3d3b75805, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a96a990423959c04999c5ed3d3b75805, type: 3}
 --- !u!1001 &6423320442035582444

@@ -90,7 +90,7 @@ public class PlayerMovement1 : PlayerMovement
         canDash = false;
         isDashing = true;
         direction.y = 0;
-        scoreInterval = 0;
+        scoreInterval = 0.1f;
 
         float dashingTimer = 0f;
         while (dashingTimer < dashingTime)

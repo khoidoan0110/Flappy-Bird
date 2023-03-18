@@ -98,11 +98,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ca6b1fbc7de4d44f9231d9afbf160e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeSinceLastScored: 0
   scoreInterval: 0.5
   gravity: -9.8
-  maxY: 5
-  minY: -3
+  maxHeight: 5
+  minHeight: -3
   animator: {fileID: 7474881353931394688}
+  topPipes:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  botPipes:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   isDashing: 0
   isShooting: 0
 --- !u!95 &7474881353931394688

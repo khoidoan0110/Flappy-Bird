@@ -8,9 +8,7 @@ public class Pipes : MonoBehaviour
     private PlayerMovement1 player1;
     private PlayerMovement2 player2;
     private PlayerMovement3 player3;
-    // private Bullet bullet;
     private bool pipeDashing = false;
-    private bool bulletActive = false;
 
     [SerializeField] private GameObject topPipe;
     [SerializeField] private GameObject botPipe;
@@ -45,6 +43,9 @@ public class Pipes : MonoBehaviour
 
     private void Update()
     {
+        transform.position += Vector3.left * pipeSpeed * Time.deltaTime;
+        Debug.Log("Pipe: " + $"{transform.position}");
+
         if (player != null)
         {
             player.CheckCollision(topPipe, botPipe);
@@ -52,14 +53,19 @@ public class Pipes : MonoBehaviour
 
         if (player1 != null)
         {
-            player1.CheckCollision(topPipe, botPipe);
             if (player1.isDashing)
             {
                 StartCoroutine(DashPipe());
+                if (pipeDashing == true)
+                {
+                    player1.CheckPointPerGap(topPipe, botPipe);
+                }
+                else player1.CheckCollision(topPipe, botPipe);
+
             }
-            if (pipeDashing == false)
+            if (!player1.isDashing)
             {
-                player1.CheckPointPerGap(topPipe, botPipe);
+                player1.CheckCollision(topPipe, botPipe);
             }
         }
         if (player2 != null)
@@ -73,7 +79,6 @@ public class Pipes : MonoBehaviour
             player3.CheckCollision(topPipe, botPipe);
         }
 
-        transform.position += Vector3.left * pipeSpeed * Time.deltaTime;
         if (transform.position.x < leftCameraEdge)
         {
             Destroy(gameObject);

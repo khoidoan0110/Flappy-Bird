@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
         float BotPipeX = lowerPipe.transform.position.x;
         float BotPipeY = lowerPipe.transform.position.y;
 
-        if (transform.position.y >= TopPipeY && transform.position.y < maxY)
+        if (transform.position.y >= TopPipeY - 0.2f && transform.position.y < maxY)
         {
             if (transform.position.x + 0.2f > topXLeft && transform.position.x - 0.2f < topXRight)
             {
@@ -87,9 +87,9 @@ public class PlayerMovement : MonoBehaviour
                 isDead = false;
             }
         }
-        else if (transform.position.y <= BotPipeY && transform.position.y > minY)
+        else if (transform.position.y <= BotPipeY + 0.2f && transform.position.y > minY)
         {
-            if (transform.position.x + 0.2f> topXLeft && transform.position.x - 0.2f < topXRight)
+            if (transform.position.x + 0.2f > topXLeft && transform.position.x - 0.2f < topXRight)
             {
                 isDead = true;
             }
@@ -112,4 +112,8 @@ public class PlayerMovement : MonoBehaviour
         timeSinceLastScored += Time.deltaTime;
         soundPlayed = false;
     }
+
+
+
+
 }

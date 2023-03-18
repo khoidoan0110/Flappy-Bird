@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerMovement2 : PlayerMovement
 {
-    private bool canShoot = true;
     [SerializeField] private float shootingCooldown = 0.5f;
     [SerializeField] private Transform gunPoint;
     private GameObject bullet;
@@ -19,7 +18,7 @@ public class PlayerMovement2 : PlayerMovement
             animator.SetTrigger("Flap");
         }
 
-        if (Input.GetMouseButtonDown(1) && canShoot)
+        if (Input.GetMouseButtonDown(1))
         {
             Shoot();
         }
